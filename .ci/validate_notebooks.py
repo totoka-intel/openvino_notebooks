@@ -30,7 +30,7 @@ SEPARATED_VENV_NAME = Path("openvino_venv")
 
 
 def detect_source_venv_path() -> Path:
-    r"""
+    """
     Detect the source virtual environment path based on the current Python executable.
 
     On Unix, python is in bin/ subdirectory:  .../env_root/bin/python  -> .parent.parent
@@ -179,7 +179,8 @@ def prepare_test_plan(
     notebooks_dir = nb_dir or orig_nb_dir
     notebooks: list[Path] = sorted(list([n for n in notebooks_dir.rglob("**/*.ipynb") if not n.name.startswith("test_")]))
 
-    print(f"All notebooks: {notebooks}")
+    all_notebooks = [notebook.relative_to(notebooks_dir) for notebook in notebooks]
+    print(f"All notebooks: {all_notebooks}")
 
     test_plan: TestPlan = {notebook.relative_to(notebooks_dir): NotebookReport(status="", path=notebook, duration=0) for notebook in notebooks}
 
